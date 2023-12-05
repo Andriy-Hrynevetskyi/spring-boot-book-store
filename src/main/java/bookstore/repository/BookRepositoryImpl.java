@@ -1,6 +1,7 @@
 package bookstore.repository;
 
 import bookstore.model.Book;
+import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +27,7 @@ public class BookRepositoryImpl implements BookRepository {
             transaction = session.beginTransaction();
             session.save(book);
             transaction.commit();
+            return book;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -36,11 +38,17 @@ public class BookRepositoryImpl implements BookRepository {
                 session.close();
             }
         }
-        return null;
     }
 
     @Override
     public List<Book> findAll() {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaQuery<Book> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(Book.class);
+            criteriaQuery.from(Book.class);
+            return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't get all books", e);
+        }
     }
 }
