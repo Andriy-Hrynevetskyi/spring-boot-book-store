@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PriceSpecificationProvider implements SpecificationProvider<Book> {
+    private static final String KEY = "price";
+
     @Override
     public String getKey() {
-        return "price";
+        return KEY;
     }
 
     public Specification<Book> getSpecification(String[] params) {

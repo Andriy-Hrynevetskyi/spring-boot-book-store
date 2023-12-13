@@ -1,4 +1,4 @@
-package bookstore.repository.book;
+package bookstore.repository.book.spec;
 
 import bookstore.model.Book;
 import bookstore.repository.SpecificationProvider;
@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
+    private static final String KEY = "author";
+
     @Override
     public String getKey() {
-        return "author";
+        return KEY;
     }
 
     public Specification<Book> getSpecification(String[] params) {
