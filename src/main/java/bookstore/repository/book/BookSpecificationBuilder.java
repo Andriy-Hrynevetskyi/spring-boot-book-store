@@ -7,8 +7,7 @@ import bookstore.repository.SpecificationProviderManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
+//import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
 
     @Override
     public Specification<Book> build(BookSearchParameters searchParameters) {
-/*        Specification<Book> spec = Specification.where(null);
+        Specification<Book> spec = Specification.where(null);
         if (searchParameters.authors() != null && searchParameters.authors().length > 0) {
             spec = spec.and(bookSpecificationProviderManager.getSpecificationProvider("author")
                     .getSpecification(searchParameters.authors()));
@@ -30,34 +29,43 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
             spec = spec.and(bookSpecificationProviderManager.getSpecificationProvider("price")
                     .getSpecification(searchParameters.prices()));
         }
-        return spec;*/
+        return spec;
 
-        return Optional.of(Specification.where(null))
+        /*return Optional.of(Specification.where(null))
                 .map(spec -> addAuthorSpecification(spec, searchParameters))
                 .map(spec -> addTitleSpecification(spec, searchParameters))
                 .map(spec -> addPriceSpecification(spec, searchParameters))
                 .orElse(Specification.where(null));
     }
 
-
-    private Specification<Book> addPriceSpecification(Specification<Book> spec, BookSearchParameters searchParameters) {
+    private Specification<Book> addPriceSpecification(
+    Specification<Book> spec,
+    BookSearchParameters searchParameters) {
         return Optional.ofNullable(searchParameters.prices())
                 .filter(prices -> prices.length > 0)
-                .map(prices -> spec.and(bookSpecificationProviderManager.getSpecificationProvider("price").getSpecification(prices)))
+                .map(prices -> spec.and(bookSpecificationProviderManager
+                .getSpecificationProvider("price")
+                .getSpecification(prices)))
                 .orElse(spec);
     }
 
-    private Specification<Book> addTitleSpecification(Specification<Book> spec, BookSearchParameters searchParameters) {
+    private Specification<Book> addTitleSpecification(Specification<Book> spec,
+    BookSearchParameters searchParameters) {
         return Optional.ofNullable(searchParameters.prices())
                 .filter(titles -> titles.length > 0)
-                .map(titles -> spec.and(bookSpecificationProviderManager.getSpecificationProvider("title").getSpecification(titles)))
+                .map(titles -> spec.and(bookSpecificationProviderManager
+                .getSpecificationProvider("title")
+                .getSpecification(titles)))
                 .orElse(spec);
     }
 
-    private Specification<Book> addAuthorSpecification(Specification<Book> spec, BookSearchParameters searchParameters) {
+    private Specification<Book> addAuthorSpecification(Specification<Book> spec,
+    BookSearchParameters searchParameters) {
         return Optional.ofNullable(searchParameters.prices())
                 .filter(authors -> authors.length > 0)
-                .map(authors -> spec.and(bookSpecificationProviderManager.getSpecificationProvider("author").getSpecification(authors)))
-                .orElse(spec);
+                .map(authors -> spec.and(bookSpecificationProviderManager
+                .getSpecificationProvider("author")
+                .getSpecification(authors)))
+                .orElse(spec);*/
     }
 }
