@@ -21,6 +21,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     private static final String MAP_TIME_KEY = "timestamp";
     private static final String MAP_STATUS_KEY = "status";
     private static final String MAP_ERROR_KEY = "errors";
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
