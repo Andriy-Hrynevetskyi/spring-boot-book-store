@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Tag(name = "User management", description = "Endpoints for user registration")
 public class AuthenticationController {
 
     private final UserService userService;
 
-    @PostMapping("/auth/register")
+    @PostMapping("/register")
     public UserResponseDto register(
             @RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
-        return userService.save(requestDto);
+        return userService.register(requestDto);
     }
 }

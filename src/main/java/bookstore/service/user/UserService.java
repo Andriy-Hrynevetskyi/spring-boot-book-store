@@ -4,5 +4,5 @@ import bookstore.dto.user.UserRegistrationRequestDto;
 import bookstore.dto.user.UserResponseDto;
 
 public interface UserService {
-    UserResponseDto save(UserRegistrationRequestDto user);
+    UserResponseDto register(UserRegistrationRequestDto user);
 }

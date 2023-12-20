@@ -4,11 +4,14 @@ import bookstore.dto.user.UserRegistrationRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class PasswordValidator implements ConstraintValidator<FieldMatch, Object> {
+public class PasswordValidator
+        implements ConstraintValidator<FieldMatch, UserRegistrationRequestDto> {
 
     @Override
-    public boolean isValid(Object obj, ConstraintValidatorContext constraintValidatorContext) {
-        UserRegistrationRequestDto user = (UserRegistrationRequestDto) obj;
-        return user.getPassword().equals(user.getRepeatPassword());
+    public boolean isValid(UserRegistrationRequestDto userRegistrationRequestDto,
+                           ConstraintValidatorContext constraintValidatorContext) {
+        return userRegistrationRequestDto.getPassword() != null
+                && userRegistrationRequestDto.getPassword()
+                .equals(userRegistrationRequestDto.getRepeatPassword());
     }
 }
