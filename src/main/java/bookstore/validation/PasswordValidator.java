@@ -3,6 +3,7 @@ package bookstore.validation;
 import bookstore.dto.user.UserRegistrationRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Objects;
 
 public class PasswordValidator
         implements ConstraintValidator<FieldMatch, UserRegistrationRequestDto> {
@@ -10,8 +11,7 @@ public class PasswordValidator
     @Override
     public boolean isValid(UserRegistrationRequestDto userRegistrationRequestDto,
                            ConstraintValidatorContext constraintValidatorContext) {
-        return userRegistrationRequestDto.getPassword() != null
-                && userRegistrationRequestDto.getPassword()
-                .equals(userRegistrationRequestDto.getRepeatPassword());
+        return Objects.equals(userRegistrationRequestDto.getPassword(),
+                userRegistrationRequestDto.getRepeatPassword());
     }
 }
