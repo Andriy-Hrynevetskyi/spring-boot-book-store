@@ -12,3 +12,4 @@ databaseChangeLog:
                   constraints:
                     foreignKeyName: role_id
                     references: roles(id)
+                    nullable: false
