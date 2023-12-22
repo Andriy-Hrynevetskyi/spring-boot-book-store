@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-role-id-column
+      author: andriy_hrynevetskyi
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: role_id
+                    references: roles(id)
