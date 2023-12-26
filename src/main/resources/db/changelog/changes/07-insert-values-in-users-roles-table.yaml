@@ -1,15 +1,36 @@
 databaseChangeLog:
   - changeSet:
-      id: insert-values-to-users-roles
+      id: insert-users-roles-values
       author: andriy_hrynevetskyi
+      preConditions:
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM users WHERE email='admin@mail.com'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM roles WHERE role='ADMIN'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM users WHERE email='user@mail.com'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM roles WHERE role='USER'
       changes:
         - insert:
             tableName: users_roles
             columns:
-              - column: {name: user_id, value: 1}
-              - column: {name: role_id, value: 1}
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email='admin@mail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role='ADMIN')
         - insert:
             tableName: users_roles
             columns:
-              - column: {name: user_id, value: 2}
-              - column: {name: role_id, value: 2}
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email='user@mail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role='USER')
