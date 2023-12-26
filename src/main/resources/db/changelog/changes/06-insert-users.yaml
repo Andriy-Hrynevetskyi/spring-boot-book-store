@@ -10,7 +10,6 @@ databaseChangeLog:
               - column: {name: password, value: "$2y$10$GCUlzpc55ZOTsrgxfozAlOV8XaNV1i8/zBN321o1gD5wiA9yxApue"}
               - column: {name: first_name, value: "admin"}
               - column: {name: last_name, value: "admin"}
-              - column: {name: role_id, value: "1"}
         - insert:
             tableName: users
             columns:
@@ -18,5 +17,4 @@ databaseChangeLog:
               - column: { name: password, value: "$2y$10$GCUlzpc55ZOTsrgxfozAlOV8XaNV1i8/zBN321o1gD5wiA9yxApue" }
               - column: { name: first_name, value: "user" }
               - column: { name: last_name, value: "user" }
-              - column: { name: role_id, value: "2" }
 

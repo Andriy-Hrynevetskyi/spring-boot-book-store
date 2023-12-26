@@ -7,9 +7,9 @@ databaseChangeLog:
             tableName: users
             columns:
               - column:
-                  name: role_id
-                  type: bigint
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: false
                   constraints:
-                    foreignKeyName: role_id
-                    references: roles(id)
                     nullable: false
+
