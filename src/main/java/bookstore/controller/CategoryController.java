@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,10 @@ public class CategoryController {
     public void updateCategoryById(@PathVariable Long id,
                                    @RequestBody @Valid CategoryRequestDto requestDto) {
         categoryService.updateCategoryById(id, requestDto);
+    }
+    @DeleteMapping("/api/categories/{id}")
+    public void deleteCategoryById(@PathVariable Long id) {
+        categoryService.deleteCategoryById(id);
     }
 }
 
