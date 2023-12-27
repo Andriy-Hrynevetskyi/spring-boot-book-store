@@ -2,6 +2,7 @@ package bookstore.service.category;
 
 import bookstore.dto.category.CategoryDto;
 import bookstore.dto.category.CategoryRequestDto;
+import bookstore.exception.EntityNotFoundException;
 import bookstore.mapper.CategoryMapper;
 import bookstore.model.Category;
 import bookstore.repository.category.CategoryRepository;
@@ -26,5 +27,15 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto save(CategoryRequestDto requestDto) {
         Category category = categoryMapper.toModel(requestDto);
         return categoryMapper.toDto(categoryRepository.save(category));
+    }
+
+    @Override
+    public void updateCategoryById(Long id, CategoryRequestDto requestDto) {
+        if (!categoryRepository.existsCategoryById(id)) {
+            throw new EntityNotFoundException("Can't find a category with given id: " + id);
+        }
+        Category category = categoryMapper.toModel(requestDto);
+        category.setId(id);
+        categoryRepository.save(category);
     }
 }

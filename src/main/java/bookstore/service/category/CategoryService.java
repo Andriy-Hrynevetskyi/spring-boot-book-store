@@ -9,4 +9,6 @@ public interface CategoryService {
     List<CategoryDto> getAll(Pageable pageable);
 
     CategoryDto save(CategoryRequestDto requestDto);
+
+    void updateCategoryById(Long id, CategoryRequestDto requestDto);
 }
