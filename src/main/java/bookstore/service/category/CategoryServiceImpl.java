@@ -1,7 +1,9 @@
 package bookstore.service.category;
 
 import bookstore.dto.category.CategoryDto;
+import bookstore.dto.category.CategoryRequestDto;
 import bookstore.mapper.CategoryMapper;
+import bookstore.model.Category;
 import bookstore.repository.category.CategoryRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll(pageable).stream()
                 .map(categoryMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public CategoryDto save(CategoryRequestDto requestDto) {
+        Category category = categoryMapper.toModel(requestDto);
+        return categoryMapper.toDto(categoryRepository.save(category));
     }
 }
