@@ -22,3 +22,5 @@ databaseChangeLog:
                     foreignKeyName: roles_id
                     nullable: false
                     references: roles(id)
+            primaryKey:
+              columnNames: user_id, role_id
