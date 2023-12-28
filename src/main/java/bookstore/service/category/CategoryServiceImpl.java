@@ -17,6 +17,12 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
+    public CategoryDto getById(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find a category with given id: " + id));
+        return categoryMapper.toDto(category);
+    }
+
     public List<CategoryDto> getAll(Pageable pageable) {
         return categoryRepository.findAll(pageable).stream()
                 .map(categoryMapper::toDto)

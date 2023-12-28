@@ -1,7 +1,9 @@
 package bookstore.controller;
 
+import bookstore.dto.book.BookWithoutCategoryIds;
 import bookstore.dto.category.CategoryDto;
 import bookstore.dto.category.CategoryRequestDto;
+import bookstore.service.book.BookService;
 import bookstore.service.category.CategoryService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -21,23 +23,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/categories")
 public class CategoryController {
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @GetMapping
     public List<CategoryDto> getAll(Pageable pageable) {
         return categoryService.getAll(pageable);
     }
 
-    @PostMapping("/api/categories")
+    @GetMapping("/{id}")
+    public CategoryDto getCategoryById(@PathVariable Long id) {
+        return categoryService.getById(id);
+    }
+
+    @GetMapping("/{id}/books")
+    public List<BookWithoutCategoryIds> getAllBooksByCategoryId(Pageable pageable,
+                                                                @PathVariable Long id) {
+        return bookService.findAllByCategoryId(pageable, id);
+    }
+
+    @PostMapping()
     public CategoryDto createCategory(@RequestBody @Valid CategoryRequestDto requestDto) {
         return categoryService.save(requestDto);
     }
 
-    @PutMapping("/api/categories/{id}")
+    @PutMapping("/{id}")
     public void updateCategoryById(@PathVariable Long id,
                                    @RequestBody @Valid CategoryRequestDto requestDto) {
         categoryService.updateCategoryById(id, requestDto);
     }
-    @DeleteMapping("/api/categories/{id}")
+
+    @DeleteMapping("/{id}")
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
     }
