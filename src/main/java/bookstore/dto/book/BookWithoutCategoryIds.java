@@ -1,7 +1,9 @@
 package bookstore.dto.book;
 
 import java.math.BigDecimal;
+import lombok.Data;
 
+@Data
 public class BookWithoutCategoryIds {
     private Long id;
     private String title;
