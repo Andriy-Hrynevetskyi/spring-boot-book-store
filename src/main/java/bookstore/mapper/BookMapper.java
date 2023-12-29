@@ -24,7 +24,7 @@ public interface BookMapper {
 
     @AfterMapping
     default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
-        if (book.getCategories() != null) {
+        if (!book.getCategories().isEmpty()) {
             bookDto.setCategoryIds(book.getCategories().stream()
                     .map(Category::getId)
                     .collect(Collectors.toSet()));

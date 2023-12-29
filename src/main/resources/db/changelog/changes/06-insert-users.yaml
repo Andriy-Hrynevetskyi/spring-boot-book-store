@@ -18,3 +18,4 @@ databaseChangeLog:
               - column: { name: first_name, value: "user" }
               - column: { name: last_name, value: "user" }
 
+

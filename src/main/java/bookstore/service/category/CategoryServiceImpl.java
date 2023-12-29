@@ -14,12 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
+    private static final String WRONG_ID_ERROR_MSG = "Can't find a category with given id: ";
+
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
     public CategoryDto getById(Long id) {
         Category category = categoryRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a category with given id: " + id));
+                () -> new EntityNotFoundException(WRONG_ID_ERROR_MSG + id));
         return categoryMapper.toDto(category);
     }
 
@@ -38,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void updateCategoryById(Long id, CategoryRequestDto requestDto) {
         if (!categoryRepository.existsCategoryById(id)) {
-            throw new EntityNotFoundException("Can't find a category with given id: " + id);
+            throw new EntityNotFoundException(WRONG_ID_ERROR_MSG + id);
         }
         Category category = categoryMapper.toModel(requestDto);
         category.setId(id);

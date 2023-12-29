@@ -12,3 +12,4 @@ databaseChangeLog:
             columns:
               - column: {name: role, value: "USER"}
 
+
