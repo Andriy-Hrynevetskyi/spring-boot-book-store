@@ -34,3 +34,4 @@ databaseChangeLog:
               - column:
                   name: role_id
                   valueComputed: (SELECT id FROM roles WHERE role='USER')
+
