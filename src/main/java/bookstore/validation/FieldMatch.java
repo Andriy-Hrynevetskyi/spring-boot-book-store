@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 public @interface FieldMatch {
     String message() default "Invalid password";
     Class<?>[] groups() default {};
-    Class<? extends Payload>[] payLoad() default {};
+    Class<? extends Payload>[] payload() default {};
 }

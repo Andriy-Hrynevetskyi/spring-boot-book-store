@@ -7,13 +7,15 @@ databaseChangeLog:
             tableName: users
             columns:
               - column: {name: email, value: "admin@mail.com"}
-              - column: {name: password, value: "$2y$10$GCUlzpc55ZOTsrgxfozAlOV8XaNV1i8/zBN321o1gD5wiA9yxApue"}
+              - column: {name: password, value: "$2a$10$zHIrs0y1WIP.gVSXz86mNOSNT4Qx6q9ggD2nusQc/ChSNvT.j8wYy
+"}
               - column: {name: first_name, value: "admin"}
               - column: {name: last_name, value: "admin"}
         - insert:
             tableName: users
             columns:
               - column: { name: email, value: "user@mail.com" }
-              - column: { name: password, value: "$2y$10$GCUlzpc55ZOTsrgxfozAlOV8XaNV1i8/zBN321o1gD5wiA9yxApue" }
+              - column: { name: password, value: "$2a$10$zHIrs0y1WIP.gVSXz86mNOSNT4Qx6q9ggD2nusQc/ChSNvT.j8wYy
+" }
               - column: { name: first_name, value: "user" }
               - column: { name: last_name, value: "user" }
