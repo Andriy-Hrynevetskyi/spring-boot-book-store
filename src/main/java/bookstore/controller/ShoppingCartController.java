@@ -1,9 +1,9 @@
 package bookstore.controller;
 
-import bookstore.dto.shopping_cart.AddToCartRequestDto;
-import bookstore.dto.shopping_cart.ShoppingCartDto;
+import bookstore.dto.shoppingcart.AddToCartRequestDto;
+import bookstore.dto.shoppingcart.ShoppingCartDto;
 import bookstore.model.User;
-import bookstore.service.shopping_cart.ShoppingCartService;
+import bookstore.service.shoppingcart.ShoppingCartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -29,11 +29,17 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    public void getShoppingCart() {}
+    public void getShoppingCart() {
+
+    }
 
     @DeleteMapping
-    public void removeBookFromShoppingCart() {}
+    public void removeBookFromShoppingCart() {
+
+    }
 
     @PutMapping
-    public void updateBookQuantity() {}
+    public void updateBookQuantity() {
+
+    }
 }

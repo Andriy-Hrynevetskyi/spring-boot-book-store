@@ -1,7 +1,7 @@
-package bookstore.service.shopping_cart;
+package bookstore.service.shoppingcart;
 
-import bookstore.dto.shopping_cart.AddToCartRequestDto;
-import bookstore.dto.shopping_cart.ShoppingCartDto;
+import bookstore.dto.shoppingcart.AddToCartRequestDto;
+import bookstore.dto.shoppingcart.ShoppingCartDto;
 import bookstore.exception.EntityNotFoundException;
 import bookstore.mapper.ShoppingCartMapper;
 import bookstore.model.Book;
@@ -9,15 +9,12 @@ import bookstore.model.CartItem;
 import bookstore.model.ShoppingCart;
 import bookstore.model.User;
 import bookstore.repository.book.BookRepository;
-import bookstore.repository.cart_item.CartItemRepository;
-import bookstore.repository.shopping_cart.ShoppingCartRepository;
+import bookstore.repository.cartitem.CartItemRepository;
+import bookstore.repository.shoppingcart.ShoppingCartRepository;
 import bookstore.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +24,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final UserRepository userRepository;
     private final CartItemRepository cartItemRepository;
     private final ShoppingCartMapper shoppingCartMapper;
-     @Override
-     @Transactional
+
+    @Override
+    @Transactional
     public ShoppingCartDto addToCart(AddToCartRequestDto requestDto, Long userId) {
         Long bookId = requestDto.getBookId();
         Book book = bookRepository.findById(bookId).orElseThrow(

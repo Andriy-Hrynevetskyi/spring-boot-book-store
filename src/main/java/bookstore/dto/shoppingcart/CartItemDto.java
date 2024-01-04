@@ -1,5 +1,8 @@
-package bookstore.dto.shopping_cart;
+package bookstore.dto.shoppingcart;
 
+import lombok.Data;
+
+@Data
 public class CartItemDto {
     private Long id;
     private Long bookId;
