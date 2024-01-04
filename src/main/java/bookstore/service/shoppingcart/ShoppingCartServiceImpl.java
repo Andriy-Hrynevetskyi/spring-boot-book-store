@@ -34,7 +34,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find an user with given id: " + userId)
         );
-        ShoppingCart shoppingCartFromDb = shoppingCartRepository.findByUserId(userId)
+        ShoppingCart shoppingCartFromDb = shoppingCartRepository.findShoppingCartByUserId(userId)
                 .orElseGet(() -> {
                     ShoppingCart shoppingCart = new ShoppingCart();
                     shoppingCart.setUser(user);
@@ -51,8 +51,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCartDto getShoppingCart(Long id) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(id).orElseThrow(
+    public ShoppingCartDto getShoppingCartByUserId(Long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(id).orElseThrow(
                 () -> new EntityNotFoundException(
                         "There is no such shopping cart with given id: " + id)
         );

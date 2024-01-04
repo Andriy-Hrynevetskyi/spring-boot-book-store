@@ -34,8 +34,7 @@ public class ShoppingCartController {
     @GetMapping
     public ShoppingCartDto getShoppingCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return shoppingCartService.getShoppingCart(user.getId());
-
+        return shoppingCartService.getShoppingCartByUserId(user.getId());
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
