@@ -6,6 +6,8 @@ import bookstore.dto.shoppingcart.UpdateCartItemDto;
 import bookstore.model.User;
 import bookstore.service.cartitem.CartItemService;
 import bookstore.service.shoppingcart.ShoppingCartService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
+@Tag(name = "Shopping cart management", description = "Endpoints for managing shopping cart")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final CartItemService cartItemService;
 
     @PostMapping
+    @Operation(summary = "Add cart item",
+            description = "Add new cart item and creates new cart if they don't exist")
     public ShoppingCartDto addToCart(@RequestBody @Valid AddToCartRequestDto requestDto,
                                      Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -33,12 +38,16 @@ public class ShoppingCartController {
     }
 
     @GetMapping
+    @Operation(summary = "Get shopping cart",
+            description = "Retrieves current user's shopping cart")
     public ShoppingCartDto getShoppingCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return shoppingCartService.getShoppingCartByUserId(user.getId());
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
+    @Operation(summary = "Delete cart item",
+            description = "Safely deletes cart item from current shopping cart")
     public ShoppingCartDto removeBookFromShoppingCart(@PathVariable Long cartItemId,
                                                       Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -46,6 +55,8 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/cart-items/{cartItemId}")
+    @Operation(summary = "Update cart item",
+            description = "Updates quantity in particular cart item")
     public ShoppingCartDto updateCartItemById(
             @PathVariable Long cartItemId,
             @Valid @RequestBody UpdateCartItemDto requestDto,
