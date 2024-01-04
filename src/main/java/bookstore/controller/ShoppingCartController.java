@@ -2,6 +2,7 @@ package bookstore.controller;
 
 import bookstore.dto.shoppingcart.AddToCartRequestDto;
 import bookstore.dto.shoppingcart.ShoppingCartDto;
+import bookstore.dto.shoppingcart.UpdateCartItemDto;
 import bookstore.model.User;
 import bookstore.service.cartitem.CartItemService;
 import bookstore.service.shoppingcart.ShoppingCartService;
@@ -46,8 +47,11 @@ public class ShoppingCartController {
 
     @PutMapping("/cart-items/{cartItemId}")
     public ShoppingCartDto updateCartItemById(
-            @Valid @RequestBody AddToCartRequestDto requestDto,
+            @PathVariable Long cartItemId,
+            @Valid @RequestBody UpdateCartItemDto requestDto,
             Authentication authentication) {
-        return null;
+        User user = (User) authentication.getPrincipal();
+        return cartItemService.updateCartItemById(
+                cartItemId, user.getId(), requestDto.getQuantity());
     }
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface CartItemService {
 
     ShoppingCartDto deleteCartItemById(Long cartItemId, Long id);
+
+    ShoppingCartDto updateCartItemById(Long cartItemId, Long userId, int quantity);
 }

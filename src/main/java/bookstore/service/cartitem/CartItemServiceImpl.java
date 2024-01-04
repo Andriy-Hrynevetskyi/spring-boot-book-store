@@ -3,6 +3,7 @@ package bookstore.service.cartitem;
 import bookstore.dto.shoppingcart.ShoppingCartDto;
 import bookstore.exception.EntityNotFoundException;
 import bookstore.mapper.ShoppingCartMapper;
+import bookstore.model.CartItem;
 import bookstore.model.ShoppingCart;
 import bookstore.repository.cartitem.CartItemRepository;
 import bookstore.repository.shoppingcart.ShoppingCartRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CartItemServiceImpl implements CartItemService {
+    private static final String ERROR_MSG = "Can't find cart item with given id doesn't exist: ";
     private final CartItemRepository cartItemRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final ShoppingCartMapper shoppingCartMapper;
@@ -20,19 +22,44 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     @Transactional
     public ShoppingCartDto deleteCartItemById(Long cartItemId, Long userId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId)
-                .orElseThrow(
-                    () -> new EntityNotFoundException(
-                        "Can't find shopping cart by given user id: " + userId)
-        );
-        boolean isItemInShoppingCart = shoppingCart.getCartItems().stream()
-                .anyMatch(cartItem -> cartItem.getId().equals(cartItemId));
-        if (isItemInShoppingCart) {
+        ShoppingCart shoppingCart = getShoppingCartFromDb(userId);
+        if (checkIsCartItemExist(shoppingCart, cartItemId)) {
             cartItemRepository.deleteById(cartItemId);
-            ShoppingCart updatedShoppingCart = shoppingCartRepository
-                    .findShoppingCartByUserId(userId).get();
-            return shoppingCartMapper.toDto(updatedShoppingCart);
+            return updateShoppingCart(userId);
         }
-        throw new EntityNotFoundException("Cant item with given id doesn't exist: " + cartItemId);
+        throw new EntityNotFoundException(ERROR_MSG + cartItemId);
+    }
+
+    @Override
+    @Transactional
+    public ShoppingCartDto updateCartItemById(Long cartItemId, Long userId, int quantity) {
+        ShoppingCart shoppingCart = getShoppingCartFromDb(userId);
+        if (checkIsCartItemExist(shoppingCart, cartItemId)) {
+            CartItem cartItemFromShoppingCart = cartItemRepository
+                    .findCartItemById(cartItemId).get();
+            cartItemFromShoppingCart.setQuantity(cartItemFromShoppingCart.getQuantity() + quantity);
+            cartItemRepository.save(cartItemFromShoppingCart);
+            return updateShoppingCart(userId);
+        }
+        throw new EntityNotFoundException(ERROR_MSG + cartItemId);
+    }
+
+    private ShoppingCart getShoppingCartFromDb(Long userId) {
+        return shoppingCartRepository.findShoppingCartByUserId(userId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Can't find shopping cart by given user id: " + userId)
+                );
+    }
+
+    private boolean checkIsCartItemExist(ShoppingCart shoppingCart, Long cartItemId) {
+        return shoppingCart.getCartItems().stream()
+                .anyMatch(cartItem -> cartItem.getId().equals(cartItemId));
+    }
+
+    private ShoppingCartDto updateShoppingCart(Long userId) {
+        ShoppingCart updatedShoppingCart = shoppingCartRepository
+                .findShoppingCartByUserId(userId).get();
+        return shoppingCartMapper.toDto(updatedShoppingCart);
     }
 }
