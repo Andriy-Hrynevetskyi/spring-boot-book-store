@@ -43,7 +43,7 @@ public class BookController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Create a new book",
             description = "Add a new book to DB if input data is valid")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
@@ -51,7 +51,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update a book by id",
             description = "Updates the book with given id if all data is valid")
     public void updateBookById(@PathVariable Long id,
@@ -61,7 +61,7 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a book by id",
             description = "Set the is_deleted parameter 'true' if id is valid")
     public void deleteBookById(@PathVariable Long id) {
