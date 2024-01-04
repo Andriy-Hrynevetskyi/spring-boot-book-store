@@ -38,12 +38,14 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
-    public ShoppingCartDto removeBookFromShoppingCart(@PathVariable Long cartItemId) {
-        return cartItemService.deleteBookById(cartItemId);
+    public ShoppingCartDto removeBookFromShoppingCart(@PathVariable Long cartItemId,
+                                                      Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return cartItemService.deleteCartItemById(cartItemId, user.getId());
     }
 
     @PutMapping("/cart-items/{cartItemId}")
-    public ShoppingCartDto updateBookQuantity(
+    public ShoppingCartDto updateCartItemById(
             @Valid @RequestBody AddToCartRequestDto requestDto,
             Authentication authentication) {
         return null;
