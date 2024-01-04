@@ -29,7 +29,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping
-    public void getShoppingCart() {
+    public ShoppingCartDto getShoppingCart(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return shoppingCartService.getShoppingCart(user.getId());
 
     }
 

@@ -5,4 +5,6 @@ import bookstore.dto.shoppingcart.ShoppingCartDto;
 
 public interface ShoppingCartService {
     ShoppingCartDto addToCart(AddToCartRequestDto requestDto, Long id);
+
+    ShoppingCartDto getShoppingCart(Long id);
 }

@@ -49,4 +49,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartFromDb.getCartItems().add(cartItem);
         return shoppingCartMapper.toDto(shoppingCartFromDb);
     }
+
+    @Override
+    public ShoppingCartDto getShoppingCart(Long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(id).orElseThrow(
+                () -> new EntityNotFoundException(
+                        "There is no such shopping cart with given id: " + id)
+        );
+        return shoppingCartMapper.toDto(shoppingCart);
+    }
 }
