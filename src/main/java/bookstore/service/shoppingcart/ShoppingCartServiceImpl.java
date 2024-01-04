@@ -2,6 +2,7 @@ package bookstore.service.shoppingcart;
 
 import bookstore.dto.shoppingcart.AddToCartRequestDto;
 import bookstore.dto.shoppingcart.ShoppingCartDto;
+import bookstore.exception.CartItemException;
 import bookstore.exception.EntityNotFoundException;
 import bookstore.mapper.ShoppingCartMapper;
 import bookstore.model.Book;
@@ -30,9 +31,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartDto addToCart(AddToCartRequestDto requestDto, Long userId) {
         Long bookId = requestDto.getBookId();
         Book book = bookRepository.findById(bookId).orElseThrow(
-                () -> new EntityNotFoundException("Can't find a book with given id: " + bookId));
+                () -> new EntityNotFoundException("Can't find the book with given id: " + bookId));
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new EntityNotFoundException("Can't find an user with given id: " + userId)
+                () -> new EntityNotFoundException("Can't find the user with given id: " + userId)
         );
         ShoppingCart shoppingCartFromDb = shoppingCartRepository.findShoppingCartByUserId(userId)
                 .orElseGet(() -> {
@@ -41,6 +42,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                     shoppingCartRepository.save(shoppingCart);
                     return shoppingCart;
                 });
+        boolean isBookInShoppingCart = shoppingCartFromDb.getCartItems().stream()
+                .anyMatch(cartItem -> cartItem.getBook().getId().equals(bookId));
+        if (isBookInShoppingCart) {
+            throw new CartItemException("Current book is already in your cart."
+                    + "Please update quantity");
+        }
         CartItem cartItem = new CartItem();
         cartItem.setBook(book);
         cartItem.setQuantity(requestDto.getQuantity());
