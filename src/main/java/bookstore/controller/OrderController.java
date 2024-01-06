@@ -52,6 +52,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/items/{id}")
+    @Operation(summary = "Get certain order item")
     public OrderItemDto getOrderItem(@PathVariable Long orderId,
                                      @PathVariable Long id,
                                      Authentication authentication) {
