@@ -18,8 +18,10 @@ import bookstore.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -71,5 +73,10 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItems(orderItems);
         //TODO: CLEAR SHOPPING CART
         return orderMapper.toDto(order);
+    }
+
+    @Override
+    public List<OrderDto> getAllOrders(Long userId, Pageable pageable) {
+        return orderMapper.toDtoList(orderRepository.findAllByUserId(userId, pageable));
     }
 }
