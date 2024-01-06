@@ -7,6 +7,7 @@ import bookstore.model.OrderItem;
 import bookstore.repository.orderitem.OrderItemRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemMapper orderItemMapper;
 
     @Override
-    public List<OrderItemDto> getAllOrderItems(Long userId, Long orderId) {
+    public List<OrderItemDto> getAllOrderItems(Long userId, Long orderId, Pageable pageable) {
         return orderItemMapper.toDtoList(
                 orderItemRepository.findAllByOrderIdAndUserId(userId, orderId
                 ));

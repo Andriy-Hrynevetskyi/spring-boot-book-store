@@ -45,9 +45,10 @@ public class OrderController {
     @GetMapping("/{orderId}/items")
     @Operation(summary = "Get item list of certain order")
     public List<OrderItemDto> getOrderDetails(@PathVariable Long orderId,
-                                              Authentication authentication) {
+                                              Authentication authentication,
+                                              Pageable pageable) {
         User user = (User)authentication.getPrincipal();
-        return orderItemService.getAllOrderItems(user.getId(), orderId);
+        return orderItemService.getAllOrderItems(user.getId(), orderId, pageable);
     }
 
     @GetMapping("/{orderId}/items/{id}")
