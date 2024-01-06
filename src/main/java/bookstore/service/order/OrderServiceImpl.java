@@ -1,9 +1,7 @@
 package bookstore.service.order;
 
 import bookstore.dto.order.OrderDto;
-import bookstore.dto.orderitem.OrderItemDto;
 import bookstore.exception.EntityNotFoundException;
-import bookstore.mapper.OrderItemMapper;
 import bookstore.mapper.OrderMapper;
 import bookstore.model.Book;
 import bookstore.model.CartItem;
@@ -32,7 +30,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
-    private final OrderItemMapper orderItemMapper;
 
     @Override
     @Transactional
@@ -67,8 +64,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setPrice(book.getPrice());
             orderItemRepository.save(orderItem);
             orderItems.add(orderItem);
-            OrderItemDto dto = orderItemMapper.toDto(orderItem);
-            System.out.println(dto);
         }
         order.setOrderItems(orderItems);
         //TODO: CLEAR SHOPPING CART
