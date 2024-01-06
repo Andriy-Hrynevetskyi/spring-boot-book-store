@@ -49,4 +49,12 @@ public class OrderController {
         User user = (User)authentication.getPrincipal();
         return orderItemService.getAllOrderItems(user.getId(), orderId);
     }
+
+    @GetMapping("/{orderId}/items/{id}")
+    public OrderItemDto getOrderItem(@PathVariable Long orderId,
+                                     @PathVariable Long id,
+                                     Authentication authentication) {
+        User user = (User)authentication.getPrincipal();
+        return orderItemService.getOrderItemByOrderId(user.getId(), orderId, id);
+    }
 }
