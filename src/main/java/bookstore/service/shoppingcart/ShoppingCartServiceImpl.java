@@ -65,4 +65,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         );
         return shoppingCartMapper.toDto(shoppingCart);
     }
+
+    @Override
+    public ShoppingCartDto clearShoppingCart(ShoppingCart shoppingCart) {
+        shoppingCart.getCartItems().clear();
+        shoppingCartRepository.save(shoppingCart);
+        return shoppingCartMapper.toDto(shoppingCart);
+    }
 }

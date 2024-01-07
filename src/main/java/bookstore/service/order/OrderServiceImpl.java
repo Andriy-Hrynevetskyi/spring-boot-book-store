@@ -14,6 +14,7 @@ import bookstore.repository.order.OrderRepository;
 import bookstore.repository.orderitem.OrderItemRepository;
 import bookstore.repository.shoppingcart.ShoppingCartRepository;
 import bookstore.repository.user.UserRepository;
+import bookstore.service.shoppingcart.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     @Transactional
@@ -67,7 +69,8 @@ public class OrderServiceImpl implements OrderService {
             orderItems.add(orderItem);
         }
         order.setOrderItems(orderItems);
-        //TODO: CLEAR SHOPPING CART
+        shoppingCartService.clearShoppingCart(shoppingCart);
+        shoppingCartRepository.save(shoppingCart);
         return orderMapper.toDto(order);
     }
 
@@ -77,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDto updateOrder(Long id, String value) {
         Order order = orderRepository.findOrderById(id).orElseThrow(
                 () -> new EntityNotFoundException("Can't find an order with given id : " + id));
