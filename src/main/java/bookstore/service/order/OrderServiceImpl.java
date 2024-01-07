@@ -2,6 +2,7 @@ package bookstore.service.order;
 
 import bookstore.dto.order.OrderDto;
 import bookstore.exception.EntityNotFoundException;
+import bookstore.exception.OrderUpdateException;
 import bookstore.mapper.OrderMapper;
 import bookstore.model.Book;
 import bookstore.model.CartItem;
@@ -73,5 +74,23 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAllOrders(Long userId, Pageable pageable) {
         return orderMapper.toDtoList(orderRepository.findAllByUserId(userId, pageable));
+    }
+
+    @Override
+    public OrderDto updateOrder(Long id, String value) {
+        Order order = orderRepository.findOrderById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find an order with given id : " + id));
+        Order.Status statusToUpdate = null;
+        for (Order.Status status : Order.Status.values()) {
+            if (status.name().equalsIgnoreCase(value)) {
+                statusToUpdate = status;
+            }
+        }
+        if (statusToUpdate == null) {
+            throw new OrderUpdateException("Invalid status: " + value);
+        }
+        order.setStatus(Order.Status.valueOf(statusToUpdate.name()));
+        orderRepository.save(order);
+        return orderMapper.toDto(order);
     }
 }

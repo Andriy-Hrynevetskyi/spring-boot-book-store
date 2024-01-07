@@ -2,6 +2,7 @@ package bookstore.controller;
 
 import bookstore.dto.order.AddOrderRequestDto;
 import bookstore.dto.order.OrderDto;
+import bookstore.dto.order.OrderUpdateDto;
 import bookstore.dto.orderitem.OrderItemDto;
 import bookstore.model.User;
 import bookstore.service.order.OrderService;
@@ -11,10 +12,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +61,13 @@ public class OrderController {
                                      Authentication authentication) {
         User user = (User)authentication.getPrincipal();
         return orderItemService.getOrderItemByOrderId(user.getId(), orderId, id);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update order status. ADMIN only")
+    @PreAuthorize("hasRole('ADMIN')")
+    public OrderDto updateOrderStatus(@PathVariable Long id,
+                                      @RequestBody OrderUpdateDto requestDto) {
+        return orderService.updateOrder(id, requestDto.getStatus());
     }
 }

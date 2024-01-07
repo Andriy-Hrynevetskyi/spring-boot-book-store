@@ -8,5 +8,7 @@ public interface OrderService {
     OrderDto addOrder(Long id, String address);
 
     List<OrderDto> getAllOrders(Long id, Pageable pageable);
+
+    OrderDto updateOrder(Long id, String status);
 }
 
