@@ -3,6 +3,8 @@ package bookstore.repository.orderitem;
 import bookstore.model.OrderItem;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +17,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
         WHERE o.id = :orderId
         AND u.id = :userId
             """)
-    List<OrderItem> findAllByOrderIdAndUserId(Long userId, Long orderId);
+    List<OrderItem> findAllByOrderIdAndUserId(Long userId, Long orderId, Pageable pageable);
 
     @Query("""
             FROM OrderItem oi

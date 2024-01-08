@@ -19,7 +19,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItemDto> getAllOrderItems(Long userId, Long orderId, Pageable pageable) {
         return orderItemMapper.toDtoList(
-                orderItemRepository.findAllByOrderIdAndUserId(userId, orderId
+                orderItemRepository.findAllByOrderIdAndUserId(userId, orderId, pageable
                 ));
     }
 
