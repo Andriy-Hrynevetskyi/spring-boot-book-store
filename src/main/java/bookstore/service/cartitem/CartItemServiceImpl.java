@@ -24,7 +24,7 @@ public class CartItemServiceImpl implements CartItemService {
     @Transactional
     public ShoppingCartDto deleteCartItemById(Long cartItemId, Long userId) {
         ShoppingCart shoppingCart = getShoppingCartFromDb(userId);
-        if (checkIsCartItemExist(shoppingCart, cartItemId)) {
+        if (checkIfCartItemExist(shoppingCart, cartItemId)) {
             cartItemRepository.deleteById(cartItemId);
             return updateShoppingCart(userId);
         }
@@ -35,7 +35,7 @@ public class CartItemServiceImpl implements CartItemService {
     @Transactional
     public ShoppingCartDto updateCartItemById(Long cartItemId, Long userId, int quantity) {
         ShoppingCart shoppingCart = getShoppingCartFromDb(userId);
-        if (checkIsCartItemExist(shoppingCart, cartItemId)) {
+        if (checkIfCartItemExist(shoppingCart, cartItemId)) {
             CartItem cartItemFromShoppingCart = cartItemRepository
                     .findCartItemById(cartItemId).get();
             cartItemFromShoppingCart.setQuantity(cartItemFromShoppingCart.getQuantity() + quantity);
@@ -53,7 +53,7 @@ public class CartItemServiceImpl implements CartItemService {
                 );
     }
 
-    private boolean checkIsCartItemExist(ShoppingCart shoppingCart, Long cartItemId) {
+    private boolean checkIfCartItemExist(ShoppingCart shoppingCart, Long cartItemId) {
         return shoppingCart.getCartItems().stream()
                 .anyMatch(cartItem -> cartItem.getId().equals(cartItemId));
     }
