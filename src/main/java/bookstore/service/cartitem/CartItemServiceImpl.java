@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CartItemServiceImpl implements CartItemService {
-    private static final String ERROR_MSG = "Can't find cart item with given id doesn't exist: ";
+    private static final String ENTITY_NOT_FOUND_EXCEPTION_MESSAGE =
+            "Can't find cart item with given id doesn't exist: ";
     private final CartItemRepository cartItemRepository;
     private final ShoppingCartRepository shoppingCartRepository;
     private final ShoppingCartMapper shoppingCartMapper;
@@ -27,7 +28,7 @@ public class CartItemServiceImpl implements CartItemService {
             cartItemRepository.deleteById(cartItemId);
             return updateShoppingCart(userId);
         }
-        throw new EntityNotFoundException(ERROR_MSG + cartItemId);
+        throw new EntityNotFoundException(ENTITY_NOT_FOUND_EXCEPTION_MESSAGE + cartItemId);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CartItemServiceImpl implements CartItemService {
             cartItemRepository.save(cartItemFromShoppingCart);
             return updateShoppingCart(userId);
         }
-        throw new EntityNotFoundException(ERROR_MSG + cartItemId);
+        throw new EntityNotFoundException(ENTITY_NOT_FOUND_EXCEPTION_MESSAGE + cartItemId);
     }
 
     private ShoppingCart getShoppingCartFromDb(Long userId) {

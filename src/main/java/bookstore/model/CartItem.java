@@ -30,7 +30,7 @@ public class CartItem {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private ShoppingCart shoppingCart;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "book_id")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
