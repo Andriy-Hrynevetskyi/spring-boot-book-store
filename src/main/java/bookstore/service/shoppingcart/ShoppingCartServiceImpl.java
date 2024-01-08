@@ -73,7 +73,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                                 "Can't find shopping cart by given user id: " + userId)
                 );
     }
-
+    @Transactional
     public ShoppingCartDto updateShoppingCart(Long userId) {
         ShoppingCart updatedShoppingCart = shoppingCartRepository
                 .findShoppingCartByUserId(userId).get();
