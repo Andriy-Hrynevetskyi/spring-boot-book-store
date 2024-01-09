@@ -66,10 +66,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartMapper.toDto(shoppingCart);
     }
 
-    @Override
-    public ShoppingCartDto clearShoppingCart(ShoppingCart shoppingCart) {
-        shoppingCart.getCartItems().clear();
-        shoppingCartRepository.save(shoppingCart);
-        return shoppingCartMapper.toDto(shoppingCart);
+    public ShoppingCart getShoppingCartFromDb(Long userId) {
+        return shoppingCartRepository.findShoppingCartByUserId(userId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "Can't find shopping cart by given user id: " + userId)
+                );
+    }
+    @Transactional
+    public ShoppingCartDto updateShoppingCart(Long userId) {
+        ShoppingCart updatedShoppingCart = shoppingCartRepository
+                .findShoppingCartByUserId(userId).get();
+        return shoppingCartMapper.toDto(updatedShoppingCart);
     }
 }

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class ShoppingCartController {
     private final CartItemService cartItemService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Add cart item",
             description = "Add new cart item and creates new cart if they don't exist")
     public ShoppingCartDto addToCart(@RequestBody @Valid AddToCartRequestDto requestDto,
@@ -38,6 +40,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get shopping cart",
             description = "Retrieves current user's shopping cart")
     public ShoppingCartDto getShoppingCart(Authentication authentication) {
@@ -46,6 +49,7 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/cart-items/{cartItemId}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Delete cart item",
             description = "Safely deletes cart item from current shopping cart")
     public ShoppingCartDto removeBookFromShoppingCart(@PathVariable Long cartItemId,
@@ -55,6 +59,7 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/cart-items/{cartItemId}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Update cart item",
             description = "Updates quantity in particular cart item")
     public ShoppingCartDto updateCartItemById(

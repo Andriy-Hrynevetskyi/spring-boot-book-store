@@ -9,5 +9,7 @@ public interface ShoppingCartService {
 
     ShoppingCartDto getShoppingCartByUserId(Long id);
 
-    ShoppingCartDto clearShoppingCart(ShoppingCart shoppingCart);
+    ShoppingCart getShoppingCartFromDb(Long userId);
+
+    ShoppingCartDto updateShoppingCart(Long userId);
 }
