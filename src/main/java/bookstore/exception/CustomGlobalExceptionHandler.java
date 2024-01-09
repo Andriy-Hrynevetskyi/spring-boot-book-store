@@ -62,6 +62,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return getResponseEntity(ex, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler({OrderUpdateException.class})
+    protected ResponseEntity<Object> handleOrderUpdateException(OrderUpdateException ex) {
+        return getResponseEntity(ex, HttpStatus.NOT_ACCEPTABLE);
+    }
+
     private ResponseEntity<Object> getResponseEntity(Exception ex, HttpStatus status) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(MAP_TIME_KEY, LocalDateTime.now());
