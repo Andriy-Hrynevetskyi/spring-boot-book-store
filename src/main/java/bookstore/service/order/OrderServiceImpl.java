@@ -32,7 +32,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final OrderMapper orderMapper;
-    private final ShoppingCartService shoppingCartService;
 
     @Override
     @Transactional
