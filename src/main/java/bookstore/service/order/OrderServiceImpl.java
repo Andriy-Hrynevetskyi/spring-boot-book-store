@@ -14,7 +14,6 @@ import bookstore.repository.order.OrderRepository;
 import bookstore.repository.orderitem.OrderItemRepository;
 import bookstore.repository.shoppingcart.ShoppingCartRepository;
 import bookstore.repository.user.UserRepository;
-import bookstore.service.shoppingcart.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.HashSet;
